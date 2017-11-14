@@ -122,7 +122,7 @@ class extractSAC(object):
             for trace in tmp:
                 tracename='-'.join([trace.stats.network,trace.stats.station,
                     trace.stats.location,trace.stats.channel,
-                    str(starttime)])+'.sac'
+                                    str(starttime)[2:-5]])+'.sac'
                 tracename=os.path.join(self.conf["datafolder"],tracename)
                 try:
                     no_gap=(trace.data.data==trace.data.filled())

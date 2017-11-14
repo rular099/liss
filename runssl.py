@@ -43,24 +43,18 @@ class runssl(object):
         stationres=station+'_res_'+now+'.txt'
         # log the problematic sac files
         errlog=open(os.path.join(self.resultdir,"errorlog_"+station+".log"),"a")
-        resfile=open(os.path.join(self.datadir,stationres),"a")
+        sslpath=os.path.join(self.bindir,'SSL')
         for sac in sacs:
-            shutil.copy(os.path.join(self.datadir,sac[0]),os.path.join(self.datadir,station+'_e.sac'))
-            shutil.copy(os.path.join(self.datadir,sac[1]),os.path.join(self.datadir,station+'_n.sac'))
-            shutil.copy(os.path.join(self.datadir,sac[2]),os.path.join(self.datadir,station+'_z.sac'))
-            fstring="-F"+station+'_e.sac'+"/"+station+'_n.sac'+"/"+station+'_z.sac'
-            sslpath=os.path.join(self.bindir,'SSL')
-            complete=subprocess.run("{} {} -P3 -T0.5/0.4 >> {}".format(sslpath,fstring,stationres),shell=True,cwd=self.datadir)
+            fstring="-F"+"/".join(sac)
+            complete=subprocess.run("{} {} -P3 -T0.5\/0.4 >> {}".format(sslpath,fstring,stationres),shell=True,cwd=self.datadir)
             if (complete.returncode != 0):
                 errlog.write("{} {} {}\n".format(sac[0],sac[1],sac[2]))
             else:
-                resfile.write(" ".join(sac)+"\n")
                 for component in sac:
                     src=os.path.join(self.conf["datafolder"],os.path.basename(component))
                     dst=os.path.join(self.conf["backupfolder"],os.path.basename(component))
                     shutil.move(src,dst)
         errlog.close()
-        resfile.close()
         src=os.path.join(self.conf["datafolder"],stationres)
         dst=os.path.join(self.resultdir,stationres)
         shutil.move(src,dst)
@@ -77,5 +71,5 @@ if (__name__=="__main__"):
     test=runssl()
     test.get_stations()
     print(test.stations)
-#    test.run(stations=['AH-BZY','AH-FYT'])
+#    test.run(stations=['AH-HEF'])
     test.run()
