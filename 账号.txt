@@ -1,0 +1,8 @@
+﻿server ：ip:port
+telnet server port
+user username
+pass passwork
+pasv rt
+retr all station
+telnet <高8位*256+低8位>
+

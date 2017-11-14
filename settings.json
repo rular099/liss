@@ -1,0 +1,13 @@
+{
+    "backupfolder": "../backup/",
+    "datafolder": "../data/",
+    "resultfolder": "../result/",
+    "binfolder":"./",
+    "datapattern": "*.mseed",
+    "dt_mseed": 600,
+    "dt_sac": 120,
+    "min_mseeds": 2,
+    "residualfile": "tmp.mseed",
+    "starttime": "None",
+    "stationfile": "stations.txt"
+}
